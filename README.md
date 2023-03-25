@@ -7,7 +7,7 @@
 
 #### - GameShopApp
 
-#### - E-Commerce
+#### - E-Commerce System
 
 #### - Rent A Car
 
