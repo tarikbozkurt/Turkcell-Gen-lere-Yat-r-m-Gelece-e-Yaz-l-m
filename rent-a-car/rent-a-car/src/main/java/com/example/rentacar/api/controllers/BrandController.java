@@ -2,16 +2,23 @@ package com.example.rentacar.api.controllers;
 
 
 import com.example.rentacar.business.abstracts.BrandService;
-import com.example.rentacar.entites.Brand;
+import com.example.rentacar.business.dto.requests.create.brand.CreateBrandRequest;
+import com.example.rentacar.business.dto.requests.update.brand.UpdateBrandRequest;
+import com.example.rentacar.business.dto.responses.create.brand.CreateBrandResponse;
+import com.example.rentacar.business.dto.responses.get.brand.GetAllBrandsResponse;
+import com.example.rentacar.business.dto.responses.get.brand.GetBrandResponse;
+import com.example.rentacar.business.dto.responses.get.car.GetAllCarsResponse;
+import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
+import com.example.rentacar.business.dto.responses.update.brand.UpdateBrandResponse;
+import com.example.rentacar.entity.Brand;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/brands")
+@RequestMapping("/api/brand")
 public class BrandController {
-
 
     private final BrandService service;
 
@@ -19,34 +26,29 @@ public class BrandController {
         this.service = service;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreateBrandResponse add(@RequestBody CreateBrandRequest request){
+        return service.add(request);
+    }
 
-
-    @GetMapping
-    public List<Brand> getAll(){
+    @GetMapping("/brands")
+    public List<GetAllBrandsResponse> getAllBrandsResponses(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Brand getById(@PathVariable("id") int id){
+    public GetBrandResponse getBrandResponse(@PathVariable("id") long id){
         return service.getById(id);
     }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Brand add(@RequestBody Brand brand){
-        return service.add(brand);
-    }
-
     @PutMapping("/{id}")
-    public Brand update( @PathVariable("id") int id, @RequestBody Brand brand){
-        return service.update(id,brand);
+    public UpdateBrandResponse update(@PathVariable("id") long id, @RequestBody UpdateBrandRequest request){
+        return service.update(id,request);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable long id){
         service.delete(id);
     }
-
-
 
 }
