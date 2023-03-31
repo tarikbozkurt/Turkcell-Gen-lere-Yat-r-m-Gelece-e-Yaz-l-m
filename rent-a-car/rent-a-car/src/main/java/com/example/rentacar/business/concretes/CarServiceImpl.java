@@ -9,18 +9,24 @@ import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
 import com.example.rentacar.business.dto.responses.update.car.UpdateCarResponse;
 import com.example.rentacar.entity.Car;
 import com.example.rentacar.repository.CarRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class CarServiceImpl implements CarService {
 
     private final CarRepository repository;
 
-    public CarServiceImpl(CarRepository repository) {
+    private final ModelMapper modelMapper;
+
+
+    public CarServiceImpl(CarRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -28,15 +34,13 @@ public class CarServiceImpl implements CarService {
 
         List<Car> cars = repository.findAll();
 
-        List<GetAllCarsResponse> response = new ArrayList<>();
-
-        for (Car car : cars) {
-
-            response.add(new GetAllCarsResponse(car.getId(),car.getModelYear(),car.getPlate(),car.getState(),car.getDailyPrice()));
-
-        }
+        List<GetAllCarsResponse> response = cars
+                .stream()
+                .map(car ->
+            modelMapper.map(car,GetAllCarsResponse.class)).toList();
 
         return response;
+
 
 
     }
@@ -46,31 +50,22 @@ public class CarServiceImpl implements CarService {
 
         Car car = repository.findById(id).orElseThrow();
 
-        GetCarResponse response = new GetCarResponse(car.getId(), car.getModelYear(),car.getPlate(), car.getState(), car.getDailyPrice());
 
-        return response;
+        GetCarResponse carDto = modelMapper.map(car,GetCarResponse.class);
+
+
+        return carDto;
 
     }
 
     @Override
     public CreateCarResponse add(CreateCarRequest request) {
 
-        Car car = new Car();
+        Car car = modelMapper.map(request,Car.class);
 
-        car.setDailyPrice(request.getDailyPrice());
-        car.setPlate(request.getPlate());
-        car.setState(request.getState());
-        car.setModelYear(request.getModelYear());
         repository.save(car);
 
-
-        CreateCarResponse response = new CreateCarResponse();
-
-        response.setId(car.getId());
-        response.setDailyPrice(car.getDailyPrice());
-        response.setPlate(car.getPlate());
-        response.setModelYear(car.getModelYear());
-        response.setState(car.getState());
+        CreateCarResponse response = modelMapper.map(car,CreateCarResponse.class);
 
         return  response;
 
@@ -80,25 +75,10 @@ public class CarServiceImpl implements CarService {
     public UpdateCarResponse update(long id, UpdateCarRequest request) {
         checkIfBrandExists(id);
 
-        Car car = repository.findById(id).orElseThrow();
 
-        car.setModelYear(request.getModelYear());
-        car.setState(request.getState());
-        car.setPlate(request.getPlate());
-        car.setDailyPrice(request.getDailyPrice());
+    // We can use request id for saving like save data method.. ?
 
-        repository.save(car);
-
-
-        UpdateCarResponse response = new UpdateCarResponse();
-
-        response.setDailyPrice(car.getDailyPrice());
-        response.setPlate(car.getPlate());
-        response.setModelYear(car.getModelYear());
-        response.setState(car.getState());
-
-
-        return response;
+        return null;
     }
 
     @Override

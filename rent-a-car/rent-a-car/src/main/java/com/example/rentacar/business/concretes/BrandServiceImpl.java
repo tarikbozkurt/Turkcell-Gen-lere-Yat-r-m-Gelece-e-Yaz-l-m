@@ -3,15 +3,13 @@ package com.example.rentacar.business.concretes;
 import com.example.rentacar.business.abstracts.BrandService;
 import com.example.rentacar.business.dto.requests.create.brand.CreateBrandRequest;
 import com.example.rentacar.business.dto.requests.update.brand.UpdateBrandRequest;
-import com.example.rentacar.business.dto.requests.update.car.UpdateCarRequest;
 import com.example.rentacar.business.dto.responses.create.brand.CreateBrandResponse;
 import com.example.rentacar.business.dto.responses.get.brand.GetAllBrandsResponse;
 import com.example.rentacar.business.dto.responses.get.brand.GetBrandResponse;
 import com.example.rentacar.business.dto.responses.update.brand.UpdateBrandResponse;
-import com.example.rentacar.business.dto.responses.update.car.UpdateCarResponse;
 import com.example.rentacar.entity.Brand;
-import com.example.rentacar.entity.Car;
 import com.example.rentacar.repository.BrandRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,9 +20,10 @@ import java.util.List;
 public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository repository;
-
-    public BrandServiceImpl(BrandRepository repository) {
+    private final ModelMapper modelMapper;
+    public BrandServiceImpl(BrandRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -32,12 +31,12 @@ public class BrandServiceImpl implements BrandService {
     public List<GetAllBrandsResponse> getAll() {
 
         List<Brand> brands = repository.findAll();
-        List<GetAllBrandsResponse> response = new ArrayList<>();
+        List<GetAllBrandsResponse> response = brands
+                .stream()
+                .map( brand -> modelMapper.map(brand, GetAllBrandsResponse.class)).toList();
 
-        for (Brand brand : brands) {
-            response.add(new GetAllBrandsResponse(brand.getId(),brand.getName()));
-        }
-        return response;
+
+    return response;
     }
 
     @Override
@@ -45,9 +44,7 @@ public class BrandServiceImpl implements BrandService {
         checkIfBrandExists(id);
         Brand brand = repository.findById(id).orElseThrow();
 
-        GetBrandResponse response = new GetBrandResponse();
-        response.setId(brand.getId());
-        response.setName(brand.getName());
+        GetBrandResponse response = modelMapper.map(brand,GetBrandResponse.class);
 
       return response;
 
@@ -56,16 +53,13 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public CreateBrandResponse add(CreateBrandRequest request) {
 
+        Brand data = modelMapper.map(request,Brand.class);
 
-        Brand brand = new Brand();
-        brand.setName(request.getName());
+        repository.save(data);
 
-        repository.save(brand);
+        CreateBrandResponse dataDto = modelMapper.map(data, CreateBrandResponse.class);
 
-        CreateBrandResponse response = new CreateBrandResponse(brand.getId(), brand.getName());
-
-
-       return response;
+       return dataDto;
 
 
 
@@ -74,18 +68,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public UpdateBrandResponse update(long id, UpdateBrandRequest request) {
         checkIfBrandExists(id);
-
-        Brand brand = repository.findById(id).orElseThrow();
-
-        brand.setName(request.getName());
-
-        repository.save(brand);
-
-        UpdateBrandResponse response = new UpdateBrandResponse(brand.getName());
+        //** We can use request id for saving like save data method.. ?
 
 
-
-        return response;
+        return null;
     }
 
     @Override

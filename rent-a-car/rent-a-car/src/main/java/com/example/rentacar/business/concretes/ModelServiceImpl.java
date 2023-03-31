@@ -9,10 +9,10 @@ import com.example.rentacar.business.dto.responses.get.model.GetModelResponse;
 import com.example.rentacar.business.dto.responses.update.model.UpdateModelResponse;
 import com.example.rentacar.entity.Model;
 import com.example.rentacar.repository.ModelRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -20,9 +20,11 @@ public class ModelServiceImpl implements ModelService {
 
 
     private final ModelRepository repository;
+    private final ModelMapper modelMapper;
 
-    public ModelServiceImpl(ModelRepository repository) {
+    public ModelServiceImpl(ModelRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -32,14 +34,12 @@ public class ModelServiceImpl implements ModelService {
     public List<GetAllModelsResponse> getAll() {
         List<Model> models = repository.findAll();
 
-        List<GetAllModelsResponse> response = new ArrayList<>();
-
-        for (Model model : models) {
-
-            response.add(new GetAllModelsResponse(model.getId(),model.getName()));
+        List<GetAllModelsResponse> response= models
+                .stream()
+                .map(model -> modelMapper.map(model,GetAllModelsResponse.class)).toList();
 
 
-        }
+
         return response;
     }
 
@@ -47,7 +47,9 @@ public class ModelServiceImpl implements ModelService {
     public GetModelResponse getById(long id) {
        Model model = repository.findById(id).orElseThrow();
 
-       GetModelResponse response = new GetModelResponse(model.getId(),model.getName());
+        GetModelResponse response = modelMapper.map(model,GetModelResponse.class);
+
+
 
        return response;
     }
@@ -55,13 +57,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public CreateModelResponse add(CreateModelRequest request) {
 
-        Model model = new Model();
-        model.setName(request.getName());
+        Model model = modelMapper.map(request,Model.class);
 
         repository.save(model);
 
-        CreateModelResponse response = new CreateModelResponse(model.getId(), model.getName());
-
+        CreateModelResponse response = modelMapper.map(model,CreateModelResponse.class);
 
         return response;
     }
@@ -69,13 +69,8 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public UpdateModelResponse update(long id, UpdateModelRequest request) {
         checkIfBrandExists(id);
-        Model model = repository.findById(id).orElseThrow();
-        model.setName(request.getName());
-        repository.save(model);
-
-        UpdateModelResponse response = new UpdateModelResponse(model.getName());
-
-        return response;
+        // We can use request id for saving like save data method.. ?
+        return null;
 
 
     }
