@@ -13,9 +13,9 @@ public class Model {
     private long id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     //brand_id modeldeki brand_id nin adı kısmı
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "brand_id") //foreign key adı
     private Brand brand;
 
 

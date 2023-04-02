@@ -1,6 +1,7 @@
 package com.example.rentacar.entity;
 
 
+import com.example.rentacar.entity.enumerations.State;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,8 +13,16 @@ public class Car {
     private long id;
     private int modelYear;
     private String plate;
-    private int state; // 1 - Available , 2 - Rented , 3 - Maintance
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state; // 1 - Available , 2 - Rented , 3 - Maintance
     private double dailyPrice;
+
+
+    @OneToOne(mappedBy = "car")
+    private Maintenances maintenances;
 
     @ManyToOne
     @JoinColumn(name = "model_id")
@@ -22,7 +31,7 @@ public class Car {
     public Car() {
     }
 
-    public Car(long id, int modelYear, String plate, int state, double dailyPrice) {
+    public Car(long id, int modelYear, String plate, State state, double dailyPrice,Maintenances maintenances ) {
         this.id = id;
         this.modelYear = modelYear;
         this.plate = plate;
@@ -54,11 +63,11 @@ public class Car {
         this.plate = plate;
     }
 
-    public int getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(State state) {
         this.state = state;
     }
 
@@ -69,4 +78,21 @@ public class Car {
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
+    public Maintenances getMaintenances() {
+        return maintenances;
+    }
+
+    public void setMaintenances(Maintenances maintenances) {
+        this.maintenances = maintenances;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+
 }

@@ -41,7 +41,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public GetBrandResponse getById(long id)  {
-        checkIfBrandExists(id);
+        checkIfBrandExistsById(id);
         Brand brand = repository.findById(id).orElseThrow();
 
         GetBrandResponse response = modelMapper.map(brand,GetBrandResponse.class);
@@ -52,9 +52,9 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public CreateBrandResponse add(CreateBrandRequest request) {
-
+        checkIfBrandExistsByName(request.getName());
         Brand data = modelMapper.map(request,Brand.class);
-
+        data.setId(0);
         repository.save(data);
 
         CreateBrandResponse dataDto = modelMapper.map(data, CreateBrandResponse.class);
@@ -67,16 +67,20 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public UpdateBrandResponse update(long id, UpdateBrandRequest request) {
-        checkIfBrandExists(id);
-        //** We can use request id for saving like save data method.. ?
+        checkIfBrandExistsById(id);
+        Brand brand  = modelMapper.map(request,Brand.class);
+        brand.setId(id);
+        brand =  repository.save(brand);
+
+        UpdateBrandResponse response = modelMapper.map(brand,UpdateBrandResponse.class);
 
 
-        return null;
+        return response;
     }
 
     @Override
     public void delete(long id) {
-        checkIfBrandExists(id);
+        checkIfBrandExistsById(id);
         repository.deleteById(id);
     }
 
@@ -84,9 +88,17 @@ public class BrandServiceImpl implements BrandService {
 
 //BUSINESS RULES
 
-private void checkIfBrandExists(long id){
-    if(!repository.existsById(id)) throw new IllegalArgumentException("ID NOT FOUND !");
 
-}
 
+    private void checkIfBrandExistsById(long id) {
+        if (!repository.existsById(id)){
+            throw new IllegalArgumentException("Brand does not exist with id: " + id);
+        }
+    }
+
+    private void checkIfBrandExistsByName(String name) {
+        if (repository.existsByNameIgnoreCase(name)) {
+            throw new RuntimeException("Brand name already exists");
+        }
+    }
 }

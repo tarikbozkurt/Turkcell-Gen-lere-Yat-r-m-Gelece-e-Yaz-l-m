@@ -1,16 +1,18 @@
 package com.example.rentacar.business.dto.responses.get.car;
 
+import com.example.rentacar.entity.enumerations.State;
+
 public class GetCarResponse {
     private long id;
     private int modelYear;
     private String plate;
-    private int state; // 1 - Available , 2 - Rented , 3 - Maintance
+    private State state; // 1 - Available , 2 - Rented , 3 - Maintance
     private double dailyPrice;
 
     public GetCarResponse() {
     }
 
-    public GetCarResponse(long id, int modelYear, String plate, int state, double dailyPrice) {
+    public GetCarResponse(long id, int modelYear, String plate, State state, double dailyPrice) {
         this.id = id;
         this.modelYear = modelYear;
         this.plate = plate;
@@ -30,7 +32,7 @@ public class GetCarResponse {
         return plate;
     }
 
-    public int getState() {
+    public State getState() {
         return state;
     }
 

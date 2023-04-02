@@ -8,6 +8,7 @@ import com.example.rentacar.business.dto.responses.create.car.CreateCarResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetAllCarsResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
 import com.example.rentacar.business.dto.responses.update.car.UpdateCarResponse;
+import com.example.rentacar.entity.enumerations.State;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +41,8 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public List<GetAllCarsResponse> getAllCarsResponses(){
-        return service.getAll();
+    public List<GetAllCarsResponse> getAllCarsResponses(@RequestParam(required = false) State state){
+        return service.getAll(state);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -6,15 +6,19 @@ import com.example.rentacar.business.dto.responses.create.car.CreateCarResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetAllCarsResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
 import com.example.rentacar.business.dto.responses.update.car.UpdateCarResponse;
+import com.example.rentacar.entity.Car;
+import com.example.rentacar.entity.enumerations.State;
 
 import java.util.List;
 
 
 public interface CarService {
 
-    List<GetAllCarsResponse> getAll();
+    List<GetAllCarsResponse> getAll(State state);
     GetCarResponse getById(long id);
     CreateCarResponse add(CreateCarRequest car);
     UpdateCarResponse update(long id, UpdateCarRequest car);
     void delete(long id);
+
+    Car findCarById(long id);
 }
