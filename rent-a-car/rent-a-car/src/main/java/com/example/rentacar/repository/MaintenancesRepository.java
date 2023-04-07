@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MaintenancesRepository extends JpaRepository<Maintenances,Long> {
 
-
+    Maintenances findByCarIdAndIsCompletedIsFalse(long carId);
+    boolean existsByCarIdAndIsCompletedIsFalse(long carId);
 
 }

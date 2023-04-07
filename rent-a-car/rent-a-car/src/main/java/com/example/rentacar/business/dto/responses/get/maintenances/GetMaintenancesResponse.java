@@ -1,41 +1,24 @@
 package com.example.rentacar.business.dto.responses.get.maintenances;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class GetMaintenancesResponse {
 
     private long id;
     private String description;
     private long carId;
+    private boolean isCompleted;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public GetMaintenancesResponse() {
-    }
-
-    public GetMaintenancesResponse(long id, String description, long carId) {
-        this.id = id;
-        this.description = description;
-        this.carId = carId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(long carId) {
-        this.carId = carId;
-    }
 }

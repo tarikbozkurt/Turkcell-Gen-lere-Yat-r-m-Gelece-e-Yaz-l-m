@@ -9,7 +9,7 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car,Long> {
 
 
-    List<Car> findAllByState(State state);
+    List<Car> findAllByStateIsNot(State state);
 
-    boolean existsByPlateIgnoreCase(String plate);
+
 }

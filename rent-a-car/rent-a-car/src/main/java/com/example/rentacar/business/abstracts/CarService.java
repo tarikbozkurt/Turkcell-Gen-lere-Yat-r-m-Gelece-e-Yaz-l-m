@@ -14,11 +14,13 @@ import java.util.List;
 
 public interface CarService {
 
-    List<GetAllCarsResponse> getAll(State state);
+    List<GetAllCarsResponse> getAll(boolean includeMaintenance);
     GetCarResponse getById(long id);
     CreateCarResponse add(CreateCarRequest car);
     UpdateCarResponse update(long id, UpdateCarRequest car);
     void delete(long id);
 
-    Car findCarById(long id);
+    void changeState(long carId, State state);
+
+
 }

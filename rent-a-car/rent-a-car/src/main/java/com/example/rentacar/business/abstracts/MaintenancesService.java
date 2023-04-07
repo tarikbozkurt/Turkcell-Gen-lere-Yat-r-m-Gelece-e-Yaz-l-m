@@ -22,6 +22,8 @@ public interface MaintenancesService {
 
     List<GetAllMaintenancesResponse> getAll();
     GetMaintenancesResponse getById(long id);
+
+    GetMaintenancesResponse returnCarFromMaintenance(long carId);
     CreateMaintenancesResponse add(CreateMaintenancesRequest request);
     UpdateMaintenancesResponse update(long id, UpdateMaintenancesRequest request);
     void delete(long id);

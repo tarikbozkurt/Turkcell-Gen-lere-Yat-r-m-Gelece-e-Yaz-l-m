@@ -9,14 +9,19 @@ public class UpdateCarRequest {
     private State state; // 1 - Available , 2 - Rented , 3 - Maintance
     private double dailyPrice;
 
+    private int modelId;
+
+
+
     public UpdateCarRequest() {
     }
 
-    public UpdateCarRequest(int modelYear, String plate, State state, double dailyPrice) {
+    public UpdateCarRequest(int modelYear, String plate, State state, double dailyPrice,int modelId) {
         this.modelYear = modelYear;
         this.plate = plate;
         this.state = state;
         this.dailyPrice = dailyPrice;
+        this.modelId = modelId;
     }
 
     public int getModelYear() {
@@ -49,5 +54,13 @@ public class UpdateCarRequest {
 
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
+    }
+
+    public int getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(int modelId) {
+        this.modelId = modelId;
     }
 }

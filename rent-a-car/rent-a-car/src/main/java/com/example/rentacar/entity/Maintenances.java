@@ -2,52 +2,36 @@ package com.example.rentacar.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Maintenances {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    //OneToOne relationsship we can use here?
+    //OneToOne relationsship we can use here? we used ManyToOne
 
     private String description;
+    private String information;
+    private boolean isCompleted;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    @OneToOne
+
+    @ManyToOne
+    @JoinColumn(name = "car_id")
     private Car car;
 
 
-    public Maintenances() {
-    }
-
-    public Maintenances(long id, Car car,
-                        String description) {
-        this.id = id;
-        this.car = car;
-        this.description = description;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
 
 }

@@ -4,6 +4,8 @@ package com.example.rentacar.entity;
 import com.example.rentacar.entity.enumerations.State;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="cars")
 public class Car {
@@ -21,8 +23,8 @@ public class Car {
     private double dailyPrice;
 
 
-    @OneToOne(mappedBy = "car")
-    private Maintenances maintenances;
+    @OneToMany(mappedBy = "car")
+    private List<Maintenances> maintenances;
 
     @ManyToOne
     @JoinColumn(name = "model_id")
@@ -31,12 +33,13 @@ public class Car {
     public Car() {
     }
 
-    public Car(long id, int modelYear, String plate, State state, double dailyPrice,Maintenances maintenances ) {
+    public Car(long id, int modelYear, String plate, State state, double dailyPrice,List<Maintenances> maintenances ) {
         this.id = id;
         this.modelYear = modelYear;
         this.plate = plate;
         this.state = state;
         this.dailyPrice = dailyPrice;
+        this.maintenances = maintenances;
     }
 
     public long getId() {
@@ -78,11 +81,11 @@ public class Car {
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
-    public Maintenances getMaintenances() {
+    public List<Maintenances> getMaintenances() {
         return maintenances;
     }
 
-    public void setMaintenances(Maintenances maintenances) {
+    public void setMaintenances(List<Maintenances> maintenances) {
         this.maintenances = maintenances;
     }
 

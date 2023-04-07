@@ -41,8 +41,8 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public List<GetAllCarsResponse> getAllCarsResponses(@RequestParam(required = false) State state){
-        return service.getAll(state);
+    public List<GetAllCarsResponse> getAllCarsResponses(@RequestParam(required = false) boolean includeMaintenance){
+        return service.getAll(includeMaintenance);
     }
 
     @DeleteMapping("/delete/{id}")

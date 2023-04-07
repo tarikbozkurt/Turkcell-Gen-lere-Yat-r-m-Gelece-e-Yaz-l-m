@@ -1,32 +1,25 @@
 package com.example.rentacar.business.dto.requests.update.maintenances;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UpdateMaintenancesRequest {
 
 
     private String description;
     private long carId;
+    private boolean isCompleted;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public UpdateMaintenancesRequest() {
-    }
 
-    public UpdateMaintenancesRequest(String description, long carId) {
-        this.description = description;
-        this.carId = carId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public long getCarId() {
-        return carId;
-    }
-
-    public void setCarId(long carId) {
-        this.carId = carId;
-    }
 }
