@@ -12,7 +12,6 @@ import com.example.rentacar.repository.ModelRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,7 +44,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public GetModelResponse getById(long id) {
-        checkIfModelExistsById(id);
+        checkIfModelExists(id);
        Model model = repository.findById(id).orElseThrow();
 
         GetModelResponse response = modelMapper.map(model,GetModelResponse.class);
@@ -69,7 +68,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public UpdateModelResponse update(long id, UpdateModelRequest request) {
-        checkIfModelExistsById(id);
+        checkIfModelExists(id);
 
         Model model = modelMapper.map(request, Model.class);
         model.setId(id);
@@ -82,14 +81,14 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void delete(long id) {
-        checkIfModelExistsById(id);
+        checkIfModelExists(id);
         repository.deleteById(id);
 
 
     }
 
 
-    private void checkIfModelExistsById(long id) {
+    private void checkIfModelExists(long id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Model does not exists with id: " + id);
         }

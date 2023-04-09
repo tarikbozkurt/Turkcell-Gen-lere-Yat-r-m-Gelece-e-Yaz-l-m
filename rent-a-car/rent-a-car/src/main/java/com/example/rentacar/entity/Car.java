@@ -30,6 +30,10 @@ public class Car {
     @JoinColumn(name = "model_id")
     private Model model;
 
+    //mapped by iliskinin sahibi
+    @OneToMany(mappedBy = "car")
+    private List<Rental> rentals;
+
     public Car() {
     }
 

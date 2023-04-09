@@ -101,6 +101,8 @@ public class MaintenancesServiceImpl implements MaintenancesService {
     public void delete(long id) {
 
         checkIfMaintenanceExistsById(id);
+        makeCarAvailableIfIsCompletedFalse(id);
+
         maintenanceRepository.deleteById(id);
     }
 
@@ -130,6 +132,12 @@ public class MaintenancesServiceImpl implements MaintenancesService {
         }
     }
 
+    private void makeCarAvailableIfIsCompletedFalse(long id){
+        long carId = maintenanceRepository.findById(id).get().getCar().getId();
+        if(maintenanceRepository.existsByCarIdAndIsCompletedIsFalse(carId)){
+            carService.changeState(carId,State.AVAILABLE);
+        }
+    }
     /*
     private void changeExitingCarState(long id) {
         Maintenances maintenance = maintenanceRepository.findById(id).orElseThrow();
