@@ -11,3 +11,5 @@
 
 #### - Rent A Car
 
+#### - StarBucks - Basic User verification example on static user list 
+
