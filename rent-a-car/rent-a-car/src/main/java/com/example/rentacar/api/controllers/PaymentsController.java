@@ -8,7 +8,6 @@ import com.example.rentacar.business.dto.responses.create.payment.CreatePaymentR
 import com.example.rentacar.business.dto.responses.get.payment.GetAllPaymentResponse;
 import com.example.rentacar.business.dto.responses.get.payment.GetPaymentResponse;
 import com.example.rentacar.business.dto.responses.update.payment.UpdatePaymentResponse;
-import com.example.rentacar.entity.Payment;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

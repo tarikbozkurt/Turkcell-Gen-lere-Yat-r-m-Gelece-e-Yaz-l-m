@@ -88,10 +88,12 @@ public class CarServiceImpl implements CarService {
         car.setState(state);
         repository.save(car);
     }
-    private void checkIfCarExists(long id){
-        if(!repository.existsById(id))
-            throw new IllegalArgumentException("ID NOT FOUND !");
 
+    private void checkIfCarExists(long id){
+
+        if(!repository.existsById(id)){
+            throw new IllegalArgumentException("zaten mevcut");
+        }
     }
     private List<Car> filterCarsByMaintenanceState(boolean includeMaintenance) {
         if (includeMaintenance) {

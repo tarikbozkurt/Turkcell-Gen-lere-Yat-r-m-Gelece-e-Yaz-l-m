@@ -8,7 +8,7 @@ import com.example.rentacar.business.dto.responses.create.payment.CreatePaymentR
 import com.example.rentacar.business.dto.responses.get.payment.GetAllPaymentResponse;
 import com.example.rentacar.business.dto.responses.get.payment.GetPaymentResponse;
 import com.example.rentacar.business.dto.responses.update.payment.UpdatePaymentResponse;
-import com.example.rentacar.core.dto.CreateRentalPaymentRequest;
+import com.example.rentacar.common.dto.CreateRentalPaymentRequest;
 import com.example.rentacar.entity.Payment;
 import com.example.rentacar.repository.PaymentRepository;
 import lombok.AllArgsConstructor;
