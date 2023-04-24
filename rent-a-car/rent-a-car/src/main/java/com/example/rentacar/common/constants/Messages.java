@@ -5,6 +5,9 @@ public class Messages {
         public static final String CAR_NOT_FOUND = "CAR_NOT_FOUND";
         public static final String CAR_ALREADY_EXISTS = "CAR_ALREADY_EXISTS";
         public static final String CAR_NOT_AVAILABLE = "CAR_NOT_AVAILABLE";
+        public static final String PLATE_ALREADY_EXISTS = "PLATE_ALREADY_EXISTS";
+
+        public static final String PLATE_NOT_VALID = "PLATE_NUMBER_MUST_MATCH_THE_PATTERN";
     }
 
     public static class Model{
@@ -41,4 +44,6 @@ public class Messages {
     public static class Invoice{
         public static final String INVOICE_NOT_FOUND = "INVOICE_NOT_FOUND";
     }
+
+
 }

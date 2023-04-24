@@ -10,7 +10,7 @@ public class ModelMapperConfig {
     //spring boot çalıştığında buraya gelip
     //bir model mapper oluşturacak
     //birdaha new lemeyecek..
-    @Bean
+@Bean
 public ModelMapper getModelMapper(){
     return new ModelMapper();
 }

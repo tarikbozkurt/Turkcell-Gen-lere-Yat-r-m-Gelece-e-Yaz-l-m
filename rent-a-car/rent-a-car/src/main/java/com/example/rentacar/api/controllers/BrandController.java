@@ -11,6 +11,7 @@ import com.example.rentacar.business.dto.responses.get.car.GetAllCarsResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
 import com.example.rentacar.business.dto.responses.update.brand.UpdateBrandResponse;
 import com.example.rentacar.entity.Brand;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class BrandController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateBrandResponse add(@RequestBody CreateBrandRequest request){
+    public CreateBrandResponse add(@Valid @RequestBody CreateBrandRequest request){
         return service.add(request);
     }
 

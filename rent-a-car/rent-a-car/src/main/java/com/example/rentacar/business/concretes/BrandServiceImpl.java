@@ -10,6 +10,8 @@ import com.example.rentacar.business.dto.responses.update.brand.UpdateBrandRespo
 import com.example.rentacar.entity.Brand;
 import com.example.rentacar.repository.BrandRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class BrandServiceImpl implements BrandService {
 
 
     @Override
+    @Cacheable(value="brand_list")
     public List<GetAllBrandsResponse> getAll() {
 
         List<Brand> brands = repository.findAll();
@@ -51,6 +54,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @CacheEvict(value="brand_list",allEntries = true) //cache'i bozmak için.
     public CreateBrandResponse add(CreateBrandRequest request) {
         checkIfBrandExistsByName(request.getName());
         Brand data = modelMapper.map(request,Brand.class);
@@ -66,6 +70,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @CacheEvict(value="brand_list",allEntries = true) //cache'i bozmak için.
     public UpdateBrandResponse update(long id, UpdateBrandRequest request) {
         checkIfBrandExistsById(id);
         Brand brand  = modelMapper.map(request,Brand.class);
@@ -79,6 +84,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @CacheEvict(value="brand_list",allEntries = true) //cache'i temizlemek/bozmak için
     public void delete(long id) {
         checkIfBrandExistsById(id);
         repository.deleteById(id);

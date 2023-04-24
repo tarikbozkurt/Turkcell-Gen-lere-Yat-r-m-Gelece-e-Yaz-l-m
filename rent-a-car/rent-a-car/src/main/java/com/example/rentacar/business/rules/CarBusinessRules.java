@@ -18,4 +18,11 @@ public class CarBusinessRules {
             throw new BusinessException(Messages.Car.CAR_NOT_FOUND);
 
     }
+
+    public void checkIfExistsByPlate(String plate){
+        if(!repository.existsByPlate(plate)){
+            throw new BusinessException(Messages.Car.PLATE_ALREADY_EXISTS);
+
+        }
+    }
 }

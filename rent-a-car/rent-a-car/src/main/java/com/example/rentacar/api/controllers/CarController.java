@@ -9,13 +9,14 @@ import com.example.rentacar.business.dto.responses.get.car.GetAllCarsResponse;
 import com.example.rentacar.business.dto.responses.get.car.GetCarResponse;
 import com.example.rentacar.business.dto.responses.update.car.UpdateCarResponse;
 import com.example.rentacar.entity.enumerations.State;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/car")
+@RequestMapping("/api/cars")
 public class CarController {
 
 
@@ -30,7 +31,7 @@ public class CarController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateCarResponse createCarResponse(@RequestBody CreateCarRequest request){
+    public CreateCarResponse createCarResponse(@Valid @RequestBody CreateCarRequest request){
 
         return service.add(request);
 

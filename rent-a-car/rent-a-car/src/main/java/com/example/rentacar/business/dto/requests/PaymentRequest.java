@@ -29,11 +29,10 @@ public class PaymentRequest {
     @Length(min = 5, message = "Kart sahibi bilgisi en az 5 karakterden oluşmalıdır")
     private String cardHolder;
 
-    @NotNull(message = "Kart son kullanma Yılı  boş bırakılamaz")
     @Min(value= 2023, message = "Kart sonlanma yılı geçersiz")
     private int cardExpirationYear;
 
-    @NotNull
+
     @Max(value =12)
     @Min(value = 1)
     private int cardExpirationMonth;

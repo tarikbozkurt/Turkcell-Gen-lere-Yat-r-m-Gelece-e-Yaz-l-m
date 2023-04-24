@@ -1,29 +1,25 @@
 package com.example.rentacar.business.dto.requests.create.brand;
 
 
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 public class CreateBrandRequest {
 
-    private long id;
+
+    @NotBlank
+    @Length(min = 2, max=50)
     private String name;
 
     public CreateBrandRequest() {
     }
 
     public CreateBrandRequest(long id, String name) {
-        this.id = id;
+
         this.name = name;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
+      public String getName() {
         return name;
     }
 
