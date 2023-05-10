@@ -50,6 +50,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CreateCarResponse add(CreateCarRequest request) {
+        rules.checkIfCarPlateExists(request.getPlate().toString());
         var car = mapper.forRequest().map(request,Car.class);
         car.setId(null);
         car.setState(State.AVAILABLE);

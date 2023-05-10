@@ -18,4 +18,10 @@ public class CarBusinessRules {
             throw new RuntimeException("CAR_NOT_EXISTS");
         }
     }
+
+    public void checkIfCarPlateExists(String plate){
+        if(repository.existsByPlate(plate)){
+            throw new RuntimeException("CAR_PLATE_ALREADY_USING!");
+        }
+    }
 }
