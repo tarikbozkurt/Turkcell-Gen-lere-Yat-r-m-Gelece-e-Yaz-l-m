@@ -1,8 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: filterdb-t1
-      uri: mongodb://localhost:27017
-
-
-
